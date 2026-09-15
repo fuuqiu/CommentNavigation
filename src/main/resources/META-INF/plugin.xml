@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <idea-plugin>
-    <!-- 保留原插件标识以延续已有安装的更新关系。 -->
-    <id>cn.tinyue.console</id>
-    <name>Code Comment Navigator Pro</name>
+    <!-- 使用新标识发布独立的免费开源 Marketplace 条目。 -->
+    <id>cn.tinyue.commentnavigation</id>
+    <name>Code Comment Navigator</name>
     <version>1.1.0</version>
     <vendor email="fuuqiu@gmail.com" url="https://github.com/fuuqiu/CommentNavigation">Fuuqiu</vendor>
 
     <description><![CDATA[
         <p>Navigate SQL and HTTP comments in a collapsible outline on the right side of the editor.</p>
-        <p>Code Comment Navigator Pro is free and open source under the MIT License. Individuals and organizations may use it for personal or commercial purposes. No purchase, subscription, or activation key is required.</p>
+        <p>Code Comment Navigator is free and open source under the MIT License. Individuals and organizations may use it for personal or commercial purposes. No purchase, subscription, or activation key is required.</p>
 
         <h3>Features</h3>
         <ul>

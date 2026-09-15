@@ -1,4 +1,4 @@
-# Code Comment Navigator Pro 开源许可
+# Code Comment Navigator 开源许可
 
 本项目采用 **MIT License**，完整许可正文见 [LICENSE.txt](LICENSE.txt)。
 

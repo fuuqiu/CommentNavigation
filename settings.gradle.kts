@@ -5,4 +5,4 @@ pluginManagement {
     }
 }
 
-rootProject.name = "console"
+rootProject.name = "comment-navigation"

@@ -1,4 +1,4 @@
-# Code Comment Navigator Pro — SQL / HTTP 注释大纲
+# Code Comment Navigator — SQL / HTTP 注释大纲
 
 在 IntelliJ IDEA 右侧显示当前 `.sql`、`.http`、`.rest` 文件的注释目录。适用于项目文件和 Scratches 中不断增长的迭代脚本。
 
@@ -89,6 +89,6 @@ JAVA_HOME='/Users/apple/Applications/IntelliJ IDEA.app/Contents/jbr/Contents/Hom
   '-PlocalIdePath=/Users/apple/Applications/IntelliJ IDEA.app/Contents'
 ```
 
-安装包位于 `build/distributions/console-1.1.0.zip`。在 IDEA 的 **Settings → Plugins → 齿轮菜单 → Install Plugin from Disk…** 中选择 ZIP，并按 IDE 提示完成安装。
+安装包位于 `build/distributions/comment-navigation-1.1.0.zip`。在 IDEA 的 **Settings → Plugins → 齿轮菜单 → Install Plugin from Disk…** 中选择 ZIP，并按 IDE 提示完成安装。
 
 开发时运行 `./gradlew runIde`（可加上述 `-PlocalIdePath` 参数）会使用 Gradle 插件的隔离沙箱，不使用个人 IDEA 配置。
