@@ -1,0 +1,20 @@
+// # 货柜与补货单查询
+# 仅演示目录语法，执行前需配置 host；占位域名不可用于联调。
+@host = https://example.invalid
+
+// ## 货柜查询
+// ### 正常场景
+###
+GET {{host}}/freezers
+
+# #### 响应核对
+# ##### 字段说明
+# 普通说明：核对返回列表。
+
+// ### 异常场景
+###
+GET {{host}}/freezers?ids=
+
+// # 补货单
+### 补货单详情
+GET {{host}}/replenishments/example
