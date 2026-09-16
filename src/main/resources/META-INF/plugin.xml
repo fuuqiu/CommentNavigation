@@ -4,11 +4,13 @@
     <id>cn.tinyue.commentnavigation</id>
     <name>Code Comment Navigator</name>
     <version>1.1.0</version>
-    <vendor email="fuuqiu@gmail.com" url="https://github.com/fuuqiu/CommentNavigation">Fuuqiu</vendor>
+    <vendor email="fuuqiu@gmail.com" url="https://commentnavigation.plugins.topxup.com">Fuuqiu</vendor>
 
     <description><![CDATA[
         <p>Navigate SQL and HTTP comments in a collapsible outline on the right side of the editor.</p>
         <p>Code Comment Navigator is free and open source under the MIT License. Individuals and organizations may use it for personal or commercial purposes. No purchase, subscription, or activation key is required.</p>
+
+        <p>Keep long database schemas, reporting queries, migration scripts, and HTTP request collections easy to navigate. Group sections by business domain and jump directly to the query or request you need.</p>
 
         <h3>Features</h3>
         <ul>
@@ -29,6 +31,7 @@
         <p>The MIT License permits use, modification, and redistribution, including commercial use, subject to retaining the copyright and license notices. The software is provided as is, without warranty.</p>
         <p>No fixed update schedule or support response time is promised.</p>
         <ul>
+            <li><a href="https://commentnavigation.plugins.topxup.com">Project website</a></li>
             <li><a href="https://github.com/fuuqiu/CommentNavigation">Source code</a></li>
             <li><a href="https://github.com/fuuqiu/CommentNavigation/blob/main/LICENSE.txt">MIT License</a></li>
             <li><a href="https://github.com/fuuqiu/CommentNavigation/blob/main/README.md">Documentation and examples</a></li>

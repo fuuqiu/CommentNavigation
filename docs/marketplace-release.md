@@ -9,7 +9,7 @@
 - 允许免费使用、修改和再分发，包括商业用途，须保留版权及许可声明。
 - 安装包内 `META-INF/LICENSE.txt` 包含相同许可正文。
 - 描述已清理购买、退款、授权到期和固定支持时限等旧商业条款。
-- 联系邮箱统一为 fuuqiu@gmail.com；网站与源码统一指向当前 GitHub 仓库。
+- 联系邮箱统一为 fuuqiu@gmail.com；官网为 https://commentnavigation.plugins.topxup.com，源码指向当前 GitHub 仓库。
 
 上述修改准备在本地，不能据此认定 GitHub 或 Marketplace 已经更新或解封。
 
@@ -62,3 +62,20 @@
 - [页面信息与描述来源](https://plugins.jetbrains.com/docs/marketplace/best-practices-for-listing.html)
 - [Marketplace 协议：开源许可证](https://www.jetbrains.com/legal/docs/plugins_site/plugin_marketplace/)
 - [封禁通知及异议处理](https://www.jetbrains.com/legal/docs/terms/marketplace-content-moderation/)
+
+## 2026-09-16 页面完善
+
+当前操作条目为 [34287 — Code Comment Navigator](https://plugins.jetbrains.com/plugin/34287-code-comment-navigator/edit)，页面仍显示审核中。页面保存不代表审核通过。
+
+- Documentation URL： https://commentnavigation.plugins.topxup.com
+- Bugtracker： https://github.com/fuuqiu/CommentNavigation/issues
+- Copyright：Copyright © 2024–2026 Fuuqiu (Tinyue)
+- Description：补充长 SQL、报表和 HTTP 请求集合的使用场景及官网链接；保留至下次版本更新。
+- Getting Started：补充安装、支持文件、六级语法、打开工具窗口、导航和即时刷新步骤。
+- Media：使用 docs/media 中的真实 IDE 截图。
+- 隐私正文：根目录 PRIVACY.md；公开发布后再填入其 GitHub 链接。
+- 未提供真实视频或独立论坛，相关字段留空。
+
+验证：16 项单元测试、buildPlugin、verifyPluginStructure 通过；76 条建表及 8 条查询通过 MySQL 方言解析，查询字段均可从结构解析。未连接数据库执行。独立 IDEA 中验证 SQL/HTTP 大纲切换、展开折叠，以及分析第 39 行和订单表第 309 行跳转。
+
+演示环境出现的 ProfilerRunConfigurationsManager / JVM DTrace 配置保存异常来自 IDE 自带 Profiler；个人 IDE 安装时的索引冻结日志归因于自带 database 插件。本次实测不等同于全量 Plugin Verifier 检查。

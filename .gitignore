@@ -59,3 +59,4 @@ bin/
 .intellijPlatform/
 .kotlin/
 examples/.idea/
+examples/commerce/.idea/

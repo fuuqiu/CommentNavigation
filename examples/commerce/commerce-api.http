@@ -1,0 +1,99 @@
+// # 电商平台 · API 场景导航
+// 原创演示接口；占位域名不可用于真实联调，不包含账号、令牌或生产数据。
+@host = https://example.invalid
+
+###
+// ## 01 · 商品发现
+// ### 分类与搜索
+// #### 按品牌、价格及库存筛选
+GET {{host}}/api/catalog/products?category=100&brand=200&minPrice=100&maxPrice=500&inStock=true&page=1&size=20
+Accept: application/json
+
+###
+// #### 商品 SKU 与促销详情
+GET {{host}}/api/catalog/products/10001?include=skus,promotions,reviews
+Accept: application/json
+
+###
+// ## 02 · 购物车与结算
+// ### 购物车
+// #### 添加商品并校验库存
+POST {{host}}/api/cart/items
+Content-Type: application/json
+
+{
+  "skuId": 1000101,
+  "quantity": 2
+}
+
+###
+// ### 结算预览
+// #### 运费、优惠券与积分试算
+POST {{host}}/api/checkout/preview
+Content-Type: application/json
+
+{
+  "items": [
+    { "skuId": 1000101, "quantity": 2 },
+    { "skuId": 1000201, "quantity": 1 }
+  ],
+  "shippingRegion": "DEMO-REGION",
+  "couponCode": "DEMO-SUMMER",
+  "pointsToUse": 100
+}
+
+###
+// ## 03 · 订单履约
+// ### 创建与查询
+// #### 幂等下单
+POST {{host}}/api/orders
+Content-Type: application/json
+Idempotency-Key: demo-order-0001
+
+{
+  "checkoutId": "demo-checkout-0001",
+  "deliveryMethod": "standard",
+  "buyerNote": "演示订单"
+}
+
+###
+// #### 订单状态与物流轨迹
+GET {{host}}/api/orders/demo-order-0001?include=items,shipments,payments
+Accept: application/json
+
+###
+// ### 异常场景
+// #### 重复提交相同幂等键
+POST {{host}}/api/orders
+Content-Type: application/json
+Idempotency-Key: demo-order-0001
+
+{
+  "checkoutId": "demo-checkout-0001",
+  "deliveryMethod": "standard",
+  "buyerNote": "演示订单"
+}
+
+###
+// ## 04 · 售后与会员
+// ### 退货申请
+// #### 部分商品退货
+POST {{host}}/api/orders/demo-order-0001/returns
+Content-Type: application/json
+
+{
+  "items": [{ "skuId": 1000101, "quantity": 1 }],
+  "reason": "DEMO_REASON",
+  "description": "仅用于展示复杂 HTTP 文件的注释导航"
+}
+
+###
+// ### 会员权益
+// #### 积分变更记录
+GET {{host}}/api/members/demo-member/points/history?page=1&size=20
+Accept: application/json
+
+###
+// #### 可用优惠券
+GET {{host}}/api/members/demo-member/coupons?status=available
+Accept: application/json

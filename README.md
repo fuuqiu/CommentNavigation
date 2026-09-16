@@ -8,7 +8,9 @@
 
 完整条款见 [LICENSE.txt](LICENSE.txt)，安装包内同时附带该文件。软件按现状提供，不承诺固定更新周期或支持响应时间。
 
-[源代码](https://github.com/fuuqiu/CommentNavigation) · [问题反馈](https://github.com/fuuqiu/CommentNavigation/issues) · 邮箱：fuuqiu@gmail.com
+[项目网站](https://commentnavigation.plugins.topxup.com) · [源代码](https://github.com/fuuqiu/CommentNavigation) · [问题反馈](https://github.com/fuuqiu/CommentNavigation/issues) · 邮箱：fuuqiu@gmail.com
+
+[插件隐私说明](PRIVACY.md)：目录在 IDE 本地生成，不上传文档内容，无遥测或广告。
 
 ## 使用
 
@@ -72,6 +74,18 @@ HTTP 的 `### 请求名称` 固定视为二级节点，因此不要用它表达�
 标题标记后须留空格，支持 1–6 级。跳级时挂在前一个层级更浅的标题下，同级标题保持文件顺序。普通说明不会混入显式标题大纲；整个文件没有任何标题或请求名称时，回退到普通注释的平级列表。
 
 可直接打开 [SQL 示例](examples/comment-outline.sql) 和 [HTTP 示例](examples/comment-outline.http) 体验层级目录。示例不包含真实业务地址或数据。
+
+## 大型电商示例
+
+[电商示例目录](examples/commerce/README.md) 提供 76 张表、1,068 行的完整结构导航，以及 363 行、8 个独立查询的经营分析 SQL。覆盖收入环比、品类排名、会员留存、RFM 分群、优惠券、补货和售后，另有分层 HTTP 场景。
+
+建表结构派生自 Apache-2.0 许可的 `macrozheng/mall`，随附来源、修改说明与完整上游许可；原创分析及 HTTP 示例适用 MIT。
+
+### 实际效果
+
+![复杂 SQL 查询的层级大纲](docs/media/01-sql-analytics.png)
+
+![大型电商表结构导航](docs/media/02-commerce-schema.png)
 
 ## 构建与安装
 
