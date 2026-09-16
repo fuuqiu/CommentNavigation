@@ -1,8 +1,8 @@
 # Code Comment Navigator — marketing site
 
-Static [Astro](https://astro.build) site (SSG, zero client JavaScript) for the
+Static [Astro](https://astro.build) site (SSG, with a small clipboard script) for the
 Code Comment Navigator IntelliJ IDEA plugin, deployed to **Cloudflare Workers Static
-Assets** at <https://commentnavigation.app.topxup.com>.
+Assets** at <https://commentnavigation.plugins.topxup.com>.
 
 Two pages: English at `/`, Simplified Chinese at `/zh/`, plus `/404.html`.
 
@@ -11,7 +11,7 @@ Two pages: English at `/`, Simplified Chinese at `/zh/`, plus `/404.html`.
 ```bash
 npm install
 npm run dev                                                        # local dev server
-SITE_URL=https://commentnavigation.app.topxup.com npm run build    # → dist/
+SITE_URL=https://commentnavigation.plugins.topxup.com npm run build    # → dist/
 npm run preview                                                    # serve dist/ locally
 npx wrangler deploy --dry-run                                      # validate config + bundle
 npx wrangler deploy                                                # publish (operator only)
@@ -77,3 +77,15 @@ Cloudflare config lives in `wrangler.jsonc`: worker `commentnavigation-site`,
 `main: worker/index.ts` (a passthrough to `env.ASSETS`), assets from `./dist` with
 `html_handling: force-trailing-slash` and `not_found_handling: 404-page`, and the custom
 domain route. The repository root carries `.cf-deploy.json` for the `/cf` deploy skill.
+
+## AI Skill
+
+`#ai-skill` offers one-click copy, a download, and a full-text preview in both languages.
+The canonical instructions live in `public/skills/{en,zh}/comment-navigator/SKILL.md`.
+`src/components/AiSkill.astro` imports those exact files at build time, so copy and
+download cannot drift. Keep both translations aligned with `CommentOutlineParser.kt`.
+Clipboard failures expand and select the text for manual copying. Downloads and the
+preview remain available without JavaScript. No clipboard contents are read or sent.
+
+Verify both language pages, successful copy, denied clipboard access, and mobile layout
+when changing this component. Check JSON body boundaries in the HTTP examples.

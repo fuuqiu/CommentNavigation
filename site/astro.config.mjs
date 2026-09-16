@@ -1,13 +1,9 @@
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 
-// The public origin is injected at build time:
-//   SITE_URL=https://commentnavigation.app.topxup.com npm run build
-// `site` is what Astro uses for canonical URLs, hreflang alternates, the sitemap and
-// the Sitemap: line in robots.txt — a wrong value here silently poisons every SEO
-// signal on the site. The fallback is the house domain convention
-// (${app}.app.topxup.com), which is also the domain wired into wrangler.jsonc.
-const SITE_URL = process.env.SITE_URL || 'https://commentnavigation.app.topxup.com';
+// 构建时统一 canonical、hreflang、sitemap 与 robots.txt 的公开域名。
+// 默认值与线上落地页和 Wrangler 路由保持一致。
+const SITE_URL = process.env.SITE_URL || 'https://commentnavigation.plugins.topxup.com';
 
 export default defineConfig({
   site: SITE_URL,

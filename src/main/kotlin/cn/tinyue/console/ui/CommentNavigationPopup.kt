@@ -1,5 +1,6 @@
 package cn.tinyue.console.ui
 
+import cn.tinyue.console.CommentNavigatorBundle.message
 import cn.tinyue.console.model.CommentType
 import cn.tinyue.console.model.Comment
 import com.intellij.icons.AllIcons
@@ -61,9 +62,9 @@ class CommentNavigationPopup(
                 
                 // 显示行号
                 val lineInfo = when (value.type) {
-                    CommentType.SQL -> "SQL行 ${value.lineNumber}"
-                    CommentType.JAVA_DOC -> "函数行 ${value.lineNumber}"
-                    CommentType.KOTLIN_DOC -> "函数行 ${value.lineNumber}"
+                    CommentType.SQL -> message("popup.sql.line", value.lineNumber)
+                    CommentType.JAVA_DOC -> message("popup.function.line", value.lineNumber)
+                    CommentType.KOTLIN_DOC -> message("popup.function.line", value.lineNumber)
                 }
                 append(" ($lineInfo)", SimpleTextAttributes.GRAYED_ATTRIBUTES)
             }
@@ -164,10 +165,10 @@ class CommentNavigationPopup(
         // 根据文件类型设置标题
         val virtualFile = FileDocumentManager.getInstance().getFile(editor.document)
         val title = when {
-            virtualFile?.name?.endsWith(".sql", ignoreCase = true) == true -> "SQL注释结构"
-            virtualFile?.name?.endsWith(".java", ignoreCase = true) == true -> "Java文档结构"
-            virtualFile?.name?.endsWith(".kt", ignoreCase = true) == true -> "Kotlin文档结构"
-            else -> "注释结构"
+            virtualFile?.name?.endsWith(".sql", ignoreCase = true) == true -> message("popup.sql")
+            virtualFile?.name?.endsWith(".java", ignoreCase = true) == true -> message("popup.java")
+            virtualFile?.name?.endsWith(".kt", ignoreCase = true) == true -> message("popup.kotlin")
+            else -> message("action.ShowCommentNavigation.text")
         }
 
         popup = JBPopupFactory.getInstance()

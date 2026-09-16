@@ -137,16 +137,21 @@ SELECT 'merchant role';
  */
 SELECT 'page permission';`;
 
-const EN_HTTP = `// # Freezer queries
-// ## Normal cases
-# ### Response field check
+const EN_HTTP = `@host = https://example.invalid
 
-### List freezers
-GET {{host}}/freezers
+###
+// # Orders API
+// ## Create order
+// ### Normal case
+POST {{host}}/orders
+Content-Type: application/json
 
-// # Replenishment
-### Replenishment detail
-GET {{host}}/replenishments/example`;
+{ "skuId": 1001, "quantity": 2 }
+
+###
+// ## Query orders
+// ### Find by ID
+GET {{host}}/orders/example-order-id`;
 
 const ZH_SQL = `-- # 角色与权限核对
 -- ## 角色本体
@@ -163,16 +168,21 @@ SELECT 'merchant role';
  */
 SELECT 'page permission';`;
 
-const ZH_HTTP = `// # 货柜查询
-// ## 正常场景
-# ### 响应字段核对
+const ZH_HTTP = `@host = https://example.invalid
 
-### 批量查询货柜
-GET {{host}}/freezers
+###
+// # 订单接口
+// ## 创建订单
+// ### 正常场景
+POST {{host}}/orders
+Content-Type: application/json
 
-// # 补货单
-### 补货单详情
-GET {{host}}/replenishments/example`;
+{ "skuId": 1001, "quantity": 2 }
+
+###
+// ## 查询订单
+// ### 按订单编号查询
+GET {{host}}/orders/example-order-id`;
 
 export const HOME: Record<Lang, HomeCopy> = {
   en: {
@@ -294,6 +304,7 @@ export const HOME: Record<Lang, HomeCopy> = {
           '`// # Heading` is the recommended form; `# # Heading` — a hash comment plus a Markdown marker — works too.',
           '`### Request name` is always a level-2 node, so do not use it for level 3; write `// ### Heading` when you need an explicit level.',
           'Empty `###` separators are skipped, and comments inside request pre/post scripts are ignored.',
+          'After a request body, put the next section’s headings after the next `###` separator so they do not become part of the body.',
         ],
       },
       tableCaption: 'HTTP heading levels',
@@ -485,6 +496,7 @@ export const HOME: Record<Lang, HomeCopy> = {
           '推荐用 `// # 标题`；`# # 标题`（`#` 注释后再加 Markdown 标记）同样支持。',
           '`### 请求名称` 固定是二级节点，因此不要用它表达三级标题；需要明确层级时写 `// ### 标题`。',
           '空的 `###` 不进入目录；请求前置和响应处理脚本里的注释也不进入目录。',
+          '请求体之后，下一组标题必须放在下一个 `###` 分隔符之后，避免被当成请求体。',
         ],
       },
       tableCaption: 'HTTP 标题层级对照',

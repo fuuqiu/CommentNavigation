@@ -3,7 +3,8 @@
     <!-- 使用新标识发布独立的免费开源 Marketplace 条目。 -->
     <id>cn.tinyue.commentnavigation</id>
     <name>Code Comment Navigator</name>
-    <version>1.1.0</version>
+    <resource-bundle>messages.CommentNavigatorBundle</resource-bundle>
+    <version>1.2.1</version>
     <vendor email="fuuqiu@gmail.com" url="https://commentnavigation.plugins.topxup.com">Fuuqiu</vendor>
 
     <description><![CDATA[
@@ -18,6 +19,7 @@
             <li>Navigate to a heading with a click or Enter; search headings by typing in the outline.</li>
             <li>Follow the selected editor and refresh the outline after edits, without saving.</li>
             <li>Expand or collapse headings, with folding state retained while editing the same file.</li>
+            <li>Browse SQL and HTTP Scratch files from the outline header, search by filename, drag files into folders, and create files or folders.</li>
             <li>Recognize HTTP request separators and fall back to ordinary comments when no headings exist.</li>
             <li>Java and Kotlin: open the existing comment navigation popup from the editor context menu.</li>
         </ul>
@@ -41,6 +43,20 @@
     ]]></description>
 
     <change-notes><![CDATA[
+        <h3>Version 1.2.1</h3>
+        <ul>
+            <li>Expand or collapse Scratch files from their own bottom header. Click the gray current filename to search the current comment outline, with parent context and keyboard navigation.</li>
+            <li>Show Scratch folders and files directly without an extra Scratches root node. Use empty space below the tree to move files back to the root folder.</li>
+            <li>Place the Scratch file tree and search field in a resizable bottom section, keeping the comment outline visible above. Retain all destination folders while searching, so filtered files can be dragged into folders without clearing the query.</li>
+        </ul>
+        <h3>Version 1.2.0</h3>
+        <ul>
+            <li>Added a searchable Scratch file picker in the outline header for SQL and HTTP files, including subdirectories.</li>
+            <li>Added drag-and-drop file moves and an inline + form: .sql/.http creates a file, a name without an extension creates a folder.</li>
+            <li>Embedded the searchable file tree in the tool window and aligned the filename dropdown arrow.</li>
+            <li>Excluded dot-prefixed folders and their contents, such as .git and .idea, from Scratch browsing and search.</li>
+            <li>Added English and Chinese UI text following the IDE language, with native light and dark theme support.</li>
+        </ul>
         <h3>Version 1.1.0</h3>
         <ul>
             <li>Added a right-side Markdown comment outline for SQL and HTTP files.</li>
@@ -62,8 +78,6 @@
     <actions>
         <action id="ShowCommentNavigation"
                 class="cn.tinyue.console.action.CommentStructureAction"
-                text="Comment Structure"
-                description="Open the comment outline or comment navigation popup"
                 icon="/icons/toolWindow.svg">
             <keyboard-shortcut keymap="$default" first-keystroke="shift meta F12"/>
             <add-to-group group-id="EditorPopupMenu" anchor="first"/>

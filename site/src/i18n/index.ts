@@ -29,7 +29,7 @@ export const ROUTES: Record<RouteKey, Record<Lang, string>> = {
 };
 
 /** In-page anchors. Ids are language-independent so both pages share one set. */
-export const SECTIONS = ['features', 'syntax', 'install', 'faq'] as const;
+export const SECTIONS = ['features', 'syntax', 'ai-skill', 'install', 'faq'] as const;
 export type SectionKey = (typeof SECTIONS)[number];
 
 /* ── Product facts (single source of truth for every page) ──────────────────────
@@ -38,7 +38,7 @@ export type SectionKey = (typeof SECTIONS)[number];
 
 export const APP = 'Code Comment Navigator';
 export const PLUGIN_ID = 'cn.tinyue.commentnavigation';
-export const VERSION = '1.1.0';
+export const VERSION = '1.2.0';
 export const AUTHOR = 'Fuuqiu';
 /** LICENSE.txt: "Copyright (c) 2024–2026 Fuuqiu (Tinyue)". */
 export const COPYRIGHT_HOLDER = 'Fuuqiu (Tinyue)';
@@ -103,6 +103,7 @@ export const ui = {
     nav: {
       features: 'Features',
       syntax: 'Syntax',
+      'ai-skill': 'AI Skill',
       install: 'Install',
       faq: 'FAQ',
     },
@@ -124,6 +125,7 @@ export const ui = {
     nav: {
       features: '功能',
       syntax: '标题写法',
+      'ai-skill': 'AI 生成规范',
       install: '安装',
       faq: '常见问题',
     },

@@ -1,5 +1,6 @@
 ---
 import CodeSample from './CodeSample.astro';
+import AiSkill from './AiSkill.astro';
 import IdeMock from './IdeMock.astro';
 import { FAQ } from '../i18n/faq';
 import { HOME } from '../i18n/home';
@@ -121,6 +122,8 @@ const installLead = marketplaceLive ? copy.install.marketplaceLive : copy.instal
     </ul>
   </div>
 </section>
+
+<AiSkill lang={lang} />
 
 <section class="section" id="install">
   <div class="wrap">

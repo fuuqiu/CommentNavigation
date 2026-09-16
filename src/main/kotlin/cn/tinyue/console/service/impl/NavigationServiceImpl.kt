@@ -1,5 +1,6 @@
 package cn.tinyue.console.service.impl
 
+import cn.tinyue.console.CommentNavigatorBundle.message
 import cn.tinyue.console.model.Comment
 import cn.tinyue.console.service.JavaDocParser
 import cn.tinyue.console.service.KotlinDocParser
@@ -53,7 +54,7 @@ class NavigationServiceImpl(
         highlightLine(editor, comment.lineNumber)
         
         // 将焦点设置到编辑器
-        WindowManager.getInstance().getStatusBar(project)?.info = "已导航到: ${comment.content}"
+        WindowManager.getInstance().getStatusBar(project)?.info = message("navigation.done", comment.content)
         
         // 激活编辑器窗口
         FileEditorManager.getInstance(project).selectedTextEditor?.component?.requestFocus()

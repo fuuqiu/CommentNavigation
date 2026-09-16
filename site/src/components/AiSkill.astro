@@ -1,0 +1,114 @@
+---
+import type { Lang } from '../i18n';
+import enSkill from '../../public/skills/en/comment-navigator/SKILL.md?raw';
+import zhSkill from '../../public/skills/zh/comment-navigator/SKILL.md?raw';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const skill = lang === 'zh' ? zhSkill : enSkill;
+const copy = lang === 'zh' ? {
+  title: '让 AI 生成自带大纲的文件',
+  lead: '复制这份 Skill 交给 AI，再描述你的业务需求。让 SQL 和 HTTP 文件用简短标题组织大纲，减少装饰分隔线和重复说明，配合插件快速定位。',
+  steps: ['复制规范，粘贴到 AI 对话中作为本次要求；也可下载为支持 Skill 的工具所用的 SKILL.md。', '提供真实表结构、SQL 方言或接口定义，让 AI 按业务域、操作、场景组织文件。', '在 IDE 打开生成的文件，使用右侧 Comment Outline 检查层级并点击跳转。'],
+  copy: '一键复制 Skill', copied: '已复制 Skill', download: '下载 SKILL.md',
+  success: '已复制完整规范。粘贴到 AI 对话后，继续描述你的需求。',
+  failed: '浏览器未允许复制。已展开全文，请选中文本手动复制，或下载 SKILL.md。',
+  preview: '查看完整 Skill', label: '完整 AI Skill（可选中复制）',
+  note: '复制与下载内容一致，无需注册。下载后，按你的 AI 工具说明安装；也可以直接粘贴使用。',
+  tip: '请求体之后，先分隔，再写标题',
+  detail: '下一组注释放在新的 ### 后面，避免 IDE 把它们当成前一个 JSON 请求体。Skill 同时覆盖 SQL 独立行注释、1–6 级标题及脚本边界。',
+  nojs: '可以下载 Skill，或展开全文手动复制。',
+} : {
+  title: 'Ask AI for files with a navigable outline',
+  lead: 'Copy this Skill into your AI conversation, then describe your task. Keep SQL and HTTP files concise, with navigable headings instead of decorative banners and repetitive explanations.',
+  steps: ['Copy the instructions into your AI conversation, or download SKILL.md for a tool that supports skills.', 'Supply your real schema, SQL dialect, or API contract. Ask AI to group by domain, operation, and scenario.', 'Open the generated files in your IDE. Check the hierarchy in Comment Outline and click to navigate.'],
+  copy: 'Copy AI Skill', copied: 'Skill copied', download: 'Download SKILL.md',
+  success: 'Full instructions copied. Paste them into your AI conversation, then describe your task.',
+  failed: 'Your browser did not allow copying. The full text is expanded; select and copy it manually, or download SKILL.md.',
+  preview: 'Read the full Skill', label: 'Full AI Skill (select to copy)',
+  note: 'Copy and download contain the same text. No registration. Follow your AI tool’s instructions to install the file, or paste it into a conversation.',
+  tip: 'After a request body: separator, then headings',
+  detail: 'Put the next section’s comments after a new ### so the IDE does not treat them as part of the previous JSON body. The Skill also covers standalone SQL comments, levels 1–6, and script boundaries.',
+  nojs: 'Download the Skill or expand the full text to copy it manually.',
+};
+const example = lang === 'zh'
+  ? '{ "skuId": 1001, "quantity": 2 }\n\n###\n// ## 按编号查询订单\nGET {{host}}/orders/example-order-id'
+  : '{ "skuId": 1001, "quantity": 2 }\n\n###\n// ## Find order by ID\nGET {{host}}/orders/example-order-id';
+---
+
+<section class="section" id="ai-skill" aria-labelledby="ai-skill-title">
+  <div class="wrap" data-ai-skill data-copied={copy.copied} data-success={copy.success} data-failed={copy.failed}>
+    <h2 id="ai-skill-title">{copy.title}</h2>
+    <p class="lede">{copy.lead}</p>
+    <div class="skill-grid">
+      <div>
+        <ol class="skill-steps">{copy.steps.map((step) => <li>{step}</li>)}</ol>
+        <div class="actions">
+          <button type="button" class="btn btn-primary skill-copy" hidden>{copy.copy}</button>
+          <a class="btn btn-ghost" href={`/skills/${lang}/comment-navigator/SKILL.md`} download="SKILL.md">{copy.download}</a>
+        </div>
+        <p class="skill-status note" role="status" aria-live="polite" aria-atomic="true"></p>
+        <p class="note">{copy.note}</p>
+        <noscript><p class="note">{copy.nojs}</p></noscript>
+      </div>
+      <aside class="skill-tip">
+        <h3>{copy.tip}</h3>
+        <p>{copy.detail}</p>
+        <pre class="code"><code>{example}</code></pre>
+      </aside>
+    </div>
+    <details class="skill-preview">
+      <summary>{copy.preview}</summary>
+      <textarea id="ai-skill-text" aria-label={copy.label} readonly spellcheck="false" wrap="off">{skill}</textarea>
+    </details>
+  </div>
+</section>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-ai-skill]').forEach((root) => {
+    const button = root.querySelector<HTMLButtonElement>('.skill-copy')!;
+    const content = root.querySelector<HTMLTextAreaElement>('textarea')!;
+    const preview = root.querySelector<HTMLDetailsElement>('details')!;
+    const status = root.querySelector<HTMLElement>('[role="status"]')!;
+    const initialLabel = button.textContent;
+    button.hidden = false;
+    button.addEventListener('click', async () => {
+      button.disabled = true;
+      try {
+        // 直接复制下载文件的原文，仅在系统确认成功后显示成功状态。
+        await navigator.clipboard.writeText(content.value);
+        button.textContent = root.dataset.copied!;
+        status.textContent = root.dataset.success!;
+      } catch {
+        // 权限受限时保留可操作的手动复制入口，不报告虚假的成功。
+        button.textContent = initialLabel;
+        preview.open = true;
+        content.focus();
+        content.select();
+        status.textContent = root.dataset.failed!;
+      } finally {
+        button.disabled = false;
+      }
+    });
+  });
+</script>
+
+<style>
+  .skill-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; margin-top: 24px; }
+  .skill-grid > * { min-width: 0; }
+  .skill-steps { padding-left: 24px; margin-top: 0; }
+  .skill-steps li { padding-left: 5px; margin-bottom: 16px; }
+  .skill-tip { padding: 24px; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-lg); }
+  .skill-tip h3 { margin-top: 0; }
+  .skill-tip p { color: var(--muted); }
+  .skill-tip pre { margin-bottom: 0; white-space: pre-wrap; overflow-wrap: anywhere; }
+  .skill-copy { font-family: inherit; cursor: pointer; }
+  .skill-copy[hidden] { display: none; }
+  .skill-copy:focus-visible, .skill-preview textarea:focus-visible { outline: 2px solid var(--focus); outline-offset: 3px; }
+  .skill-copy:disabled { cursor: wait; opacity: .7; }
+  .skill-status { min-height: 1.5em; }
+  .skill-preview { margin-top: 24px; border-top: 1px solid var(--line); padding-top: 16px; }
+  .skill-preview summary { cursor: pointer; font-weight: 600; }
+  .skill-preview textarea { display: block; width: 100%; height: 400px; margin-top: 16px; padding: 16px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--code-bg); color: var(--ink); font: 13px/1.7 var(--mono); resize: vertical; }
+  @media (max-width: 760px) { .skill-grid { grid-template-columns: 1fr; gap: 20px; } .skill-tip { padding: 18px; } }
+</style>
