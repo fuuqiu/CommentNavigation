@@ -87,6 +87,8 @@ HTTP 的 `### 请求名称` 固定视为二级节点，因此不要用它表达�
 
 ![大型电商表结构导航](docs/media/02-commerce-schema.png)
 
+![HTTP 电商请求集合导航](docs/media/03-http-workflow.png)
+
 ## 构建与安装
 
 本版本构建及兼容范围为 **IntelliJ IDEA 2026.2（262.*）**，需要 **JDK 25**。解析使用平台 Document API，无需 SQL / HTTP 语言插件依赖。更早的 IDE 版本未纳入本次兼容范围。

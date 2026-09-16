@@ -72,8 +72,8 @@
 - Copyright：Copyright © 2024–2026 Fuuqiu (Tinyue)
 - Description：补充长 SQL、报表和 HTTP 请求集合的使用场景及官网链接；保留至下次版本更新。
 - Getting Started：补充安装、支持文件、六级语法、打开工具窗口、导航和即时刷新步骤。
-- Media：使用 docs/media 中的真实 IDE 截图。
-- 隐私正文：根目录 PRIVACY.md；公开发布后再填入其 GitHub 链接。
+- Media：已上传 docs/media 中的三张真实 IDE 截图，分别展示复杂 SQL、76 张表结构和 HTTP 场景。
+- 隐私正文：根目录 PRIVACY.md；已公开并将 GitHub 链接保存至 Privacy Policy 字段。
 - 未提供真实视频或独立论坛，相关字段留空。
 
 验证：16 项单元测试、buildPlugin、verifyPluginStructure 通过；76 条建表及 8 条查询通过 MySQL 方言解析，查询字段均可从结构解析。未连接数据库执行。独立 IDEA 中验证 SQL/HTTP 大纲切换、展开折叠，以及分析第 39 行和订单表第 309 行跳转。
