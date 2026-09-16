@@ -1,0 +1,56 @@
+---
+import { renderCode } from '../i18n/code';
+import type { HomeCopy } from '../i18n/home';
+
+interface Props {
+  mock: HomeCopy['mock'];
+}
+
+const { mock } = Astro.props;
+
+// Highlighted once, here, at build time — the page ships plain spans and no script.
+const codeHtml = renderCode('sql', mock.code, mock.activeLine);
+
+// A node is a branch when the next node sits one level deeper; that decides whether it
+// gets a twisty. Same rule the real tool window follows.
+const nodes = mock.outline.map((node, i) => ({
+  ...node,
+  branch: i + 1 < mock.outline.length && mock.outline[i + 1].level > node.level,
+}));
+---
+
+<figure class="ide-figure">
+  {/* Decorative: everything in here is repeated as text in the figcaption below. */}
+  <div class="ide" aria-hidden="true">
+    <div class="ide-titlebar">
+      <span class="ide-dots"><i></i><i></i><i></i></span>
+      <span class="ide-window">{mock.window}</span>
+    </div>
+
+    <div class="ide-body">
+      <div class="ide-editor">
+        <div class="ide-tabs"><span class="ide-tab">{mock.tab}</span></div>
+        <pre class="ide-code"><code set:html={codeHtml} /></pre>
+      </div>
+
+      <div class="ide-tool">
+        <div class="ide-tool-head">
+          <span class="ide-tool-icon"></span>
+          <span class="ide-tool-title">{mock.toolWindow}</span>
+          <span class="ide-tool-actions"><i></i><i></i></span>
+        </div>
+        <ul class="ide-tree">
+          {nodes.map((node) => (
+            <li class={`lv-${node.level}${node.selected ? ' is-selected' : ''}`}>
+              <span class={node.branch ? 'tw is-open' : 'tw'}></span>
+              <span class="tw-icon"></span>
+              <span class="tw-label">{node.label}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <figcaption class="figure-alt">{mock.alt}</figcaption>
+</figure>

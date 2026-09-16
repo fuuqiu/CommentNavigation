@@ -1,0 +1,7 @@
+{
+  "packageManager": "npm",
+  "targets": [
+    { "dir": "site", "build": "SITE_URL=https://commentnavigation.app.topxup.com npm run build", "deploy": "npx wrangler deploy", "type": "workers", "name": "commentnavigation-site", "url": "https://commentnavigation.app.topxup.com" }
+  ],
+  "notes": ["Static Astro site on Workers Static Assets; the passthrough worker in site/worker/index.ts serves ./dist.", "SITE_URL decides canonical/hreflang/sitemap — changing the domain means rebuilding."]
+}

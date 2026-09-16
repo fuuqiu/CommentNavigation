@@ -1,0 +1,25 @@
+---
+import { EMAIL, GITHUB, ISSUES, LICENSE_URL, ROUTES, otherLang, ui, type Lang } from '../i18n';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = ui[lang];
+const other = otherLang(lang);
+---
+
+<footer class="site-footer">
+  <div class="wrap foot-grid">
+    <p class="foot-rights">{t.footerRights} · {t.footerLicense}</p>
+
+    <nav aria-label={t.footerNavLabel}>
+      <a href={LICENSE_URL} rel="noopener">{t.footerLicense}</a>
+      <a href={GITHUB} rel="noopener">{t.github}</a>
+      <a href={ISSUES} rel="noopener">{t.footerIssues}</a>
+      <a href={`mailto:${EMAIL}`}>{t.footerEmail}</a>
+      <a href={ROUTES.home[other]} hreflang={other === 'en' ? 'en' : 'zh-Hans'}>{ui[other].langName}</a>
+    </nav>
+  </div>
+</footer>

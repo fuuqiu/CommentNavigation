@@ -1,0 +1,26 @@
+---
+import Base from '../layouts/Base.astro';
+import { APP, GITHUB, ROUTES } from '../i18n';
+---
+
+<Base
+  lang="en"
+  route="home"
+  title={`Page not found — ${APP}`}
+  description={`This page does not exist. Return to ${APP}, the SQL and HTTP comment outline for IntelliJ IDEA.`}
+  noindex
+>
+  <section class="section section-center">
+    <div class="wrap prose">
+      <p class="eyebrow">404</p>
+      <h1>This page does not exist.</h1>
+      <p>The address you followed is not part of this site.</p>
+      <p>
+        <a href={ROUTES.home.en}>Back to the home page</a> ·
+        <a href={ROUTES.home.zh}>中文首页</a> ·
+        <a href={GITHUB} rel="noopener">GitHub</a>
+      </p>
+      <p class="note" lang="zh-Hans">这个地址不存在。返回<a href={ROUTES.home.zh}>中文首页</a>，或到 GitHub 查看源码。</p>
+    </div>
+  </section>
+</Base>

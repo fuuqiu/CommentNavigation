@@ -1,0 +1,20 @@
+---
+import { renderCode } from '../i18n/code';
+import { inlineCode } from '../i18n/inline';
+import type { CodeSample } from '../i18n/home';
+
+interface Props {
+  sample: CodeSample;
+}
+
+const { sample } = Astro.props;
+const codeHtml = renderCode(sample.lang, sample.code);
+---
+
+<div class="syntax-col">
+  <h3>{sample.label}</h3>
+  <pre class="code"><code set:html={codeHtml} /></pre>
+  <ul class="notes">
+    {sample.notes.map((note) => <li set:html={inlineCode(note)} />)}
+  </ul>
+</div>

@@ -1,0 +1,186 @@
+---
+import CodeSample from './CodeSample.astro';
+import IdeMock from './IdeMock.astro';
+import { FAQ } from '../i18n/faq';
+import { HOME } from '../i18n/home';
+import { inlineCode } from '../i18n/inline';
+import {
+  EMAIL,
+  EXAMPLE_HTTP_URL,
+  EXAMPLE_SQL_URL,
+  GITHUB,
+  ISSUES,
+  LICENSE_URL,
+  MARKETPLACE_URL,
+  README_URL,
+  type Lang,
+} from '../i18n';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const copy = HOME[lang];
+const faq = FAQ[lang];
+
+/**
+ * The single switch described in README.md: with an empty MARKETPLACE_URL the primary
+ * CTA points at GitHub and the install section explains that the listing is pending.
+ * Paste the real listing URL into src/i18n/index.ts and both flip together.
+ */
+const marketplaceLive = MARKETPLACE_URL !== '';
+const primaryHref = marketplaceLive ? MARKETPLACE_URL : GITHUB;
+const primaryLabel = marketplaceLive ? copy.hero.ctaMarketplace : copy.hero.ctaGithub;
+const installLead = marketplaceLive ? copy.install.marketplaceLive : copy.install.marketplacePending;
+---
+
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div class="hero-copy">
+      <p class="badges">{copy.hero.badges.map((badge) => <span class="badge">{badge}</span>)}</p>
+      <h1>{copy.hero.h1}</h1>
+      <p class="lede" set:html={inlineCode(copy.hero.lede)} />
+      <p class="actions">
+        <a class="btn btn-primary" href={primaryHref} rel="noopener">{primaryLabel}</a>
+        <a class="btn btn-ghost" href="#syntax">{copy.hero.ctaSyntax}</a>
+      </p>
+      <p class="note">{copy.hero.ctaNote}</p>
+    </div>
+
+    <IdeMock mock={copy.mock} />
+  </div>
+</section>
+
+<section class="section" id="how">
+  <div class="wrap">
+    <h2>{copy.steps.title}</h2>
+    <ol class="steps">
+      {copy.steps.items.map((step) => (
+        <li>
+          <h3>{step.title}</h3>
+          <p set:html={inlineCode(step.body)} />
+        </li>
+      ))}
+    </ol>
+    <p class="why" set:html={inlineCode(copy.steps.why)} />
+  </div>
+</section>
+
+<section class="section" id="features">
+  <div class="wrap">
+    <h2>{copy.features.title}</h2>
+    <p class="lede">{copy.features.lede}</p>
+    <ul class="cards">
+      {copy.features.items.map((item) => (
+        <li class="card">
+          <h3 set:html={inlineCode(item.title)} />
+          <p set:html={inlineCode(item.body)} />
+        </li>
+      ))}
+    </ul>
+    <ul class="notes notes-inline">
+      {copy.features.notes.map((note) => <li set:html={inlineCode(note)} />)}
+    </ul>
+  </div>
+</section>
+
+<section class="section" id="syntax">
+  <div class="wrap">
+    <h2>{copy.syntax.title}</h2>
+    <p class="lede">{copy.syntax.lede}</p>
+
+    <div class="syntax-grid">
+      <CodeSample sample={copy.syntax.sql} />
+      <CodeSample sample={copy.syntax.http} />
+    </div>
+
+    <div class="table-wrap">
+      <table class="levels">
+        <caption>{copy.syntax.tableCaption}</caption>
+        <thead>
+          <tr>
+            <th scope="col">{copy.syntax.tableHead[0]}</th>
+            <th scope="col">{copy.syntax.tableHead[1]}</th>
+          </tr>
+        </thead>
+        <tbody>
+          {copy.syntax.table.map((row) => (
+            <tr>
+              <td set:html={inlineCode(row[0])} />
+              <td>{row[1]}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+
+    <h3>{copy.syntax.rulesTitle}</h3>
+    <ul class="notes">
+      {copy.syntax.rules.map((rule) => <li set:html={inlineCode(rule)} />)}
+    </ul>
+  </div>
+</section>
+
+<section class="section" id="install">
+  <div class="wrap">
+    <h2>{copy.install.title}</h2>
+    <p class="lede">{copy.install.lede}</p>
+
+    <ol class="steps steps-install">
+      <li>
+        <h3>{installLead.title}</h3>
+        <p set:html={inlineCode(installLead.body)} />
+        {marketplaceLive && (
+          <p>
+            <a class="btn btn-primary" href={MARKETPLACE_URL} rel="noopener">{copy.hero.ctaMarketplace}</a>
+          </p>
+        )}
+      </li>
+      {copy.install.steps.map((step) => (
+        <li>
+          <h3>{step.title}</h3>
+          <p set:html={inlineCode(step.body)} />
+        </li>
+      ))}
+    </ol>
+
+    <p class="note">{copy.install.compat}</p>
+    <p class="note">
+      {copy.install.examplesLead}{' '}
+      <a href={EXAMPLE_SQL_URL} rel="noopener">{copy.install.exampleSql}</a> ·{' '}
+      <a href={EXAMPLE_HTTP_URL} rel="noopener">{copy.install.exampleHttp}</a>
+    </p>
+  </div>
+</section>
+
+<section class="section" id="faq">
+  <div class="wrap">
+    <h2>{lang === 'en' ? 'Frequently asked questions' : '常见问题'}</h2>
+    <div class="faq">
+      {faq.map((entry, i) => (
+        <details class="faq-item" open={i === 0}>
+          <summary set:html={inlineCode(entry.q)} />
+          <p set:html={inlineCode(entry.a)} />
+        </details>
+      ))}
+    </div>
+  </div>
+</section>
+
+<section class="section section-last" id="license">
+  <div class="wrap">
+    <h2>{copy.license.title}</h2>
+    {copy.license.body.map((paragraph) => <p class="lede" set:html={inlineCode(paragraph)} />)}
+
+    <h3>{copy.license.linksTitle}</h3>
+    <ul class="link-list">
+      <li><a href={GITHUB} rel="noopener">{copy.license.links.source}</a></li>
+      <li><a href={ISSUES} rel="noopener">{copy.license.links.issues}</a></li>
+      <li><a href={LICENSE_URL} rel="noopener">{copy.license.links.license}</a></li>
+      <li><a href={README_URL} rel="noopener">{copy.license.links.docs}</a></li>
+    </ul>
+
+    <p class="note">{copy.license.contact} <a href={`mailto:${EMAIL}`}>{EMAIL}</a>.</p>
+  </div>
+</section>

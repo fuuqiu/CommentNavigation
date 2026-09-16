@@ -1,0 +1,37 @@
+---
+import { APP, GITHUB, ROUTES, SECTIONS, ui, type Lang } from '../i18n';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = ui[lang];
+const home = ROUTES.home[lang];
+// Anchors are written against the home path so the same header also works on /404.html,
+// where the sections themselves do not exist.
+---
+
+<header class="site-header">
+  <div class="wrap bar">
+    <a class="brand" href={home}>
+      <img src="/favicon.svg" width="28" height="28" alt="" />
+      <span>{APP}</span>
+    </a>
+
+    <nav class="nav" aria-label={t.navLabel}>
+      {SECTIONS.map((key) => <a href={`${home}#${key}`}>{t.nav[key]}</a>)}
+      <a href={GITHUB} rel="noopener">{t.github}</a>
+
+      {/* The switcher stays on the page you are reading — same route, other language. */}
+      <span class="lang-switch" role="group" aria-label={t.switchLabel}>
+        <a href={ROUTES.home.en} hreflang="en" aria-current={lang === 'en' ? 'true' : undefined}>
+          {ui.en.langShort}
+        </a>
+        <a href={ROUTES.home.zh} hreflang="zh-Hans" aria-current={lang === 'zh' ? 'true' : undefined}>
+          {ui.zh.langShort}
+        </a>
+      </span>
+    </nav>
+  </div>
+</header>

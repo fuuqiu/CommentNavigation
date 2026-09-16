@@ -1,0 +1,14 @@
+---
+import Base from '../../layouts/Base.astro';
+import Home from '../../components/Home.astro';
+import { HOME } from '../../i18n/home';
+import { faqPageLd, softwareApplicationLd } from '../../i18n/jsonld';
+
+const lang = 'zh' as const;
+const { meta } = HOME[lang];
+const jsonLd = [softwareApplicationLd(lang, Astro.site!), faqPageLd(lang)];
+---
+
+<Base lang={lang} route="home" title={meta.title} description={meta.description} jsonLd={jsonLd}>
+  <Home lang={lang} />
+</Base>

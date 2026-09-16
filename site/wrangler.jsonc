@@ -1,0 +1,32 @@
+{
+  // Code Comment Navigator marketing site — Astro (SSG) on Cloudflare Workers Static Assets.
+  //
+  // Build first (the origin is injected at build time), then deploy:
+  //   SITE_URL=https://commentnavigation.app.topxup.com npm run build
+  //   npx wrangler deploy
+  //
+  // 域名规范（FACTORY §2）：每个产品的落地页固定 ${应用名小写}.app.topxup.com，
+  // zone 是 topxup.com。别自己发明子域。
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "commentnavigation-site",
+  "main": "worker/index.ts",
+  "compatibility_date": "2026-09-15",
+
+  "routes": [
+    { "pattern": "commentnavigation.app.topxup.com", "custom_domain": true }
+  ],
+
+  "assets": {
+    "directory": "./dist",
+    "binding": "ASSETS",
+
+    // Astro 以 trailingSlash: 'always' 出包。强制补斜杠意味着 /zh 会 308 到 /zh/，
+    // 只有规范形态返回 200，不会出现两个可索引副本。
+    "html_handling": "force-trailing-slash",
+    "not_found_handling": "404-page"
+  },
+
+  "observability": {
+    "enabled": true
+  }
+}
