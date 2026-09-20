@@ -11,6 +11,8 @@ import com.intellij.openapi.command.WriteCommandAction
 import com.intellij.openapi.fileEditor.FileEditorManager
 import com.intellij.openapi.progress.ProgressManager
 import com.intellij.openapi.project.Project
+import com.intellij.openapi.ui.InputValidatorEx
+import com.intellij.openapi.ui.Messages
 import com.intellij.openapi.vfs.LocalFileSystem
 import com.intellij.openapi.vfs.VFileProperty
 import com.intellij.openapi.vfs.VfsUtil
@@ -42,6 +44,8 @@ import javax.swing.KeyStroke
 import javax.swing.JButton
 import javax.swing.JComponent
 import javax.swing.JPanel
+import javax.swing.JMenuItem
+import javax.swing.JPopupMenu
 import javax.swing.JTree
 import javax.swing.SwingUtilities
 import javax.swing.event.DocumentEvent
@@ -93,8 +97,11 @@ internal class ScratchFilesPanel(
             }
         }
         tree.addMouseListener(object : MouseAdapter() {
+            override fun mousePressed(event: MouseEvent) = showRenameMenu(event)
+            override fun mouseReleased(event: MouseEvent) = showRenameMenu(event)
+
             override fun mouseClicked(event: MouseEvent) {
-                if (!SwingUtilities.isLeftMouseButton(event) || suppressOpenClick) return
+                if (!SwingUtilities.isLeftMouseButton(event) || event.isPopupTrigger || event.isControlDown || suppressOpenClick) return
                 val path = tree.getPathForLocation(event.x, event.y)
                 if (path == null) {
                     tree.clearSelection()
@@ -107,6 +114,10 @@ internal class ScratchFilesPanel(
         val keys = object : KeyAdapter() {
             override fun keyPressed(event: KeyEvent) {
                 when (event.keyCode) {
+                    KeyEvent.VK_F2 -> if (event.source === tree) {
+                        startRename()
+                        event.consume()
+                    }
                     KeyEvent.VK_ENTER -> {
                         val path = tree.selectionPath ?: return
                         val file = entry(path)?.file ?: return
@@ -279,6 +290,55 @@ internal class ScratchFilesPanel(
             return
         }
         FileEditorManager.getInstance(project).openFile(file, true)
+    }
+
+    private fun canRename(file: VirtualFile): Boolean = alive() && loaded && !creating &&
+        file.isValid && !file.isDirectory && file.isWritable && file.parent?.isWritable == true &&
+        ScratchFileRules.supports(file.name) && root?.let { VfsUtilCore.isAncestor(it, file, true) } == true
+
+    private fun showRenameMenu(event: MouseEvent) {
+        if (!event.isPopupTrigger) return
+        val path = tree.getPathForLocation(event.x, event.y) ?: return
+        tree.selectionPath = path
+        val file = entry(path)?.file ?: return
+        if (!canRename(file)) return
+        JPopupMenu().apply {
+            add(JMenuItem(message("rename")).apply { addActionListener { startRename() } })
+            show(tree, event.x, event.y)
+        }
+        event.consume()
+    }
+
+    private fun startRename() {
+        val file = selected()?.file ?: return
+        if (!canRename(file)) return
+        val validator = object : InputValidatorEx {
+            override fun getErrorText(inputString: String): String? {
+                if (!canRename(file)) return message("rename.target.error")
+                val name = ScratchFileRules.normalizeRenameName(inputString) ?: return message("rename.invalid")
+                val existing = file.parent.findChild(name)
+                return if (existing != null && existing != file) message("new.duplicate") else null
+            }
+            override fun checkInput(inputString: String): Boolean = getErrorText(inputString) == null
+            override fun canClose(inputString: String): Boolean = checkInput(inputString)
+        }
+        val input = Messages.showInputDialog(project, message("rename.prompt"), message("rename"),
+            null, file.name, validator) ?: return
+        if (!alive()) return
+        val name = ScratchFileRules.normalizeRenameName(input) ?: return
+        if (file.name == name) return
+        try {
+            WriteCommandAction.runWriteCommandAction(project, message("rename.command"), null, Runnable {
+                // 对话框关闭后再次检查目标和冲突，避免覆盖并发创建的文件。
+                validator.getErrorText(name)?.let { throw IOException(it) }
+                file.rename(this, name)
+            })
+            // 新名称不再匹配搜索时清除过滤，保留重命名后的文件选中状态。
+            if (!ScratchFileRules.matches(file.name, search.text)) search.text = ""
+            refresh(file)
+        } catch (error: IOException) {
+            status.text = message("rename.failed", error.localizedMessage.orEmpty())
+        }
     }
 
     fun startCreate() {

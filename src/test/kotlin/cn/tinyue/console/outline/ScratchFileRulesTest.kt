@@ -58,6 +58,17 @@ class ScratchFileRulesTest {
     }
 
     @Test
+    fun `重命名必须保留支持的文件后缀且不能改成目录或路径`() {
+        listOf("订单.sql", "api.v2.HTTP", "shop.SQL").forEach {
+            assertEquals(it, ScratchFileRules.normalizeRenameName(" $it "))
+        }
+        listOf("folder", "", " ", ".sql", "../shop.sql", "nested/shop.http", "a\\b.sql",
+            "shop.rest", "shop.sql.bak", "shop.sql\n", "shop.http.").forEach {
+            assertNull(ScratchFileRules.normalizeRenameName(it), it)
+        }
+    }
+
+    @Test
     fun `新建模板能被大纲解析且 HTTP 标题在分隔符之后`() {
         val parser = CommentOutlineParser()
         assertEquals(listOf(OutlineHeading("shop", 1, 1)), parser.parse(ScratchFileRules.initialContent("shop.sql"), "shop.sql"))

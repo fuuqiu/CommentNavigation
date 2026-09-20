@@ -79,3 +79,16 @@
 验证：16 项单元测试、buildPlugin、verifyPluginStructure 通过；76 条建表及 8 条查询通过 MySQL 方言解析，查询字段均可从结构解析。未连接数据库执行。独立 IDEA 中验证 SQL/HTTP 大纲切换、展开折叠，以及分析第 39 行和订单表第 309 行跳转。
 
 演示环境出现的 ProfilerRunConfigurationsManager / JVM DTrace 配置保存异常来自 IDE 自带 Profiler；个人 IDE 安装时的索引冻结日志归因于自带 database 插件。本次实测不等同于全量 Plugin Verifier 检查。
+
+
+## 2026-09-20 提交 1.2.2
+
+- 已通过 Chrome 登录会话上传到现有条目 34287 的 Stable 渠道，未勾选隐藏更新。
+- 版本 1.2.1 已发布，因此本次兼容性与重命名功能以 1.2.2 提交。
+- 更新 ID：1175618；[审核详情](https://plugins.jetbrains.com/plugin/34287-code-comment-navigator/edit/versions/stable/1175618)。
+- 提交后页面状态：Under review，尚不代表审核通过；页面提示附加审核可能需要最多 2 个工作日。
+- 页面确认 Compatibility Range：251.0 — 262.*。
+- 更新说明：支持 IDEA 2025.1–2026.2，Java 21 字节码；Scratches 文件右键 / F2 重命名及同名保护。
+- 上传文件：`build/distributions/comment-navigation-1.2.2.zip`。
+- SHA-256：`6ccbf89afe8bd52dca45096a740e7b9c1370dab382f4c5a2b321971228ac573a`。
+- 提交前执行 `test buildPlugin verifyPluginStructure` 成功；功能代码此前已通过 2025.1 / 2026.2 Plugin Verifier 检查。

@@ -24,7 +24,7 @@ export const FAQ: Record<Lang, FaqEntry[]> = {
     },
     {
       q: 'Which IntelliJ IDEA versions does it support?',
-      a: 'Version 1.1.0 is built for and verified on IntelliJ IDEA 2026.2 (build 262.*). Earlier IDE versions are not in this compatibility range. Building the plugin from source needs JDK 25.',
+      a: 'Compatibility covers IntelliJ IDEA 2025.1–2026.2 (builds 251–262.*). The plugin builds against the 2025.1 SDK and targets Java 21 bytecode. Building the plugin from source needs JDK 21.',
     },
     {
       q: 'Do I need the Database or HTTP Client plugins?',
@@ -50,7 +50,7 @@ export const FAQ: Record<Lang, FaqEntry[]> = {
     },
     {
       q: '支持哪些版本的 IntelliJ IDEA？',
-      a: '1.1.0 的构建与验证范围是 IntelliJ IDEA 2026.2（262.*），更早的 IDE 版本未纳入本次兼容范围。从源码构建插件需要 JDK 25。',
+      a: '兼容 IntelliJ IDEA 2025.1–2026.2（251–262.*），基于 2025.1 SDK 构建并输出 Java 21 字节码。从源码构建插件需要 JDK 21。',
     },
     {
       q: '需要额外装 Database 或 HTTP Client 插件吗？',

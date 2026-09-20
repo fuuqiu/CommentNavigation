@@ -21,6 +21,14 @@ class SqlFileParserImplTest {
     }
 
     @Test
+    fun `SQL 弹窗兼容 MySQL 井号注释并保留原始行号`() {
+        every { document.text } returns "# 查询角色\nSELECT '# 字符串';\n  # ## 授权明细\n#\n-- 其他说明"
+        val comments = parser.parseComments(document)
+        assertEquals(listOf("查询角色", "## 授权明细", "其他说明"), comments.map { it.content })
+        assertEquals(listOf(1, 3, 5), comments.map { it.lineNumber })
+    }
+
+    @Test
     @DisplayName("测试解析单行注释")
     fun testParseSingleLineComment() {
         // 准备测试数据
@@ -205,4 +213,4 @@ class SqlFileParserImplTest {
             assertFalse(isFunction)
         }
     }
-} 
+}

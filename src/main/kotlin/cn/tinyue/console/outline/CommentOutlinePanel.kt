@@ -20,6 +20,11 @@ import com.intellij.openapi.fileEditor.FileEditorManagerListener
 import com.intellij.openapi.project.DumbAwareAction
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.util.Disposer
+import com.intellij.openapi.vfs.VirtualFileManager
+import com.intellij.openapi.vfs.VirtualFile
+import com.intellij.openapi.vfs.newvfs.BulkFileListener
+import com.intellij.openapi.vfs.newvfs.events.VFileEvent
+import com.intellij.openapi.vfs.newvfs.events.VFilePropertyChangeEvent
 import com.intellij.ui.ColoredTreeCellRenderer
 import com.intellij.ui.OnePixelSplitter
 import com.intellij.ui.SearchTextField
@@ -205,6 +210,14 @@ class CommentOutlinePanel(private val project: Project) : JPanel(BorderLayout())
                 if (event.document === currentDocument) queueRefresh(250)
             }
         }, this)
+        project.messageBus.connect(this).subscribe(VirtualFileManager.VFS_CHANGES, object : BulkFileListener {
+            override fun after(events: List<VFileEvent>) {
+                val file = currentDocument?.let { FileDocumentManager.getInstance().getFile(it) } ?: return
+                if (events.any { it is VFilePropertyChangeEvent && it.file == file && it.propertyName == VirtualFile.PROP_NAME }) {
+                    queueRefresh(0)
+                }
+            }
+        })
         queueRefresh(0)
     }
 

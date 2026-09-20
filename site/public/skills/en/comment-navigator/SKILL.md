@@ -25,7 +25,7 @@ Preserve the requested SQL dialect, API contract, variables, business logic, and
 
 ## SQL
 
-Prefer standalone `-- # Heading`, `-- ## Heading`, and `-- ### Heading` lines. Headings inside `/* ... */` comments also work, including lines prefixed with `*`. Do not put headings after a SQL statement on the same line. Hashes inside strings, bare Markdown headings, and MySQL `#` line comments are not substitutes for this format.
+Prefer standalone `-- # Heading`, `-- ## Heading`, and `-- ### Heading` lines. Headings inside `/* ... */` comments also work, including lines prefixed with `*`. Do not put headings after a SQL statement on the same line. MySQL `#` line comments are also supported: `# Plain note` appears in the fallback outline when no explicit headings exist. Use `# # Level one` and `# ## Level two` for headings: the first hash is the comment marker, and the remaining hashes define the Markdown level. When explicit headings exist, ordinary notes stay out of the outline. Hashes inside strings are not headings. Prefer `--` for other SQL dialects; do not change dialect syntax just to standardize formatting.
 
 ```sql
 -- # Order analytics

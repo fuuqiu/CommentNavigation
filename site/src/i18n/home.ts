@@ -192,14 +192,14 @@ export const HOME: Record<Lang, HomeCopy> = {
         'Free MIT-licensed IntelliJ IDEA plugin that turns the Markdown headings in your SQL, HTTP and REST comments into a collapsible outline you can click to jump.',
     },
     hero: {
-      badges: ['Free & open source', 'MIT License', 'IntelliJ IDEA 2026.2'],
+      badges: ['Free & open source', 'MIT License', 'IntelliJ IDEA 2025.1–2026.2'],
       h1: 'A table of contents for your SQL and HTTP files',
       lede:
         'Code Comment Navigator reads the Markdown headings you already write in comments — `-- # Heading` in SQL, `// # Heading` in HTTP — and shows them as a collapsible Comment Outline on the right side of IntelliJ IDEA. Click a heading to jump to that comment line. It works in project files and in Scratches, where iteration scripts grow longest.',
       ctaMarketplace: 'Install from JetBrains Marketplace',
       ctaGithub: 'Get it on GitHub',
       ctaSyntax: 'See the heading syntax',
-      ctaNote: 'Version 1.1.0 · MIT License · built for IntelliJ IDEA 2026.2',
+      ctaNote: 'Version 1.2.2 · MIT License · built for IntelliJ IDEA 2025.1–2026.2',
     },
     mock: {
       window: 'Scratches and Consoles',
@@ -336,13 +336,13 @@ export const HOME: Record<Lang, HomeCopy> = {
       marketplaceLive: {
         title: 'Install from JetBrains Marketplace',
         body:
-          'Open the Marketplace listing and install the plugin into IntelliJ IDEA 2026.2, or search for Code Comment Navigator in Settings → Plugins → Marketplace.',
+          'Open the Marketplace listing and install the plugin into IntelliJ IDEA 2025.1–2026.2, or search for Code Comment Navigator in Settings → Plugins → Marketplace.',
       },
       steps: [
         {
           title: 'Build from source',
           body:
-            'Clone the repository and run `./gradlew test buildPlugin` with JDK 25. The installable package is written to `build/distributions/comment-navigation-1.1.0.zip`.',
+            'Clone the repository and run `./gradlew test buildPlugin` with JDK 21. The installable package is written to `build/distributions/comment-navigation-1.2.2.zip`.',
         },
         {
           title: 'Install Plugin from Disk',
@@ -356,7 +356,7 @@ export const HOME: Record<Lang, HomeCopy> = {
         },
       ],
       compat:
-        'This version is built for and verified on IntelliJ IDEA 2026.2 (build 262.*). Earlier IDE versions are not in the compatibility range. Building from source needs JDK 25.',
+        'Compatibility covers IntelliJ IDEA 2025.1–2026.2 (builds 251–262.*). The plugin builds against the 2025.1 SDK and targets Java 21 bytecode. Building from source needs JDK 21.',
       examplesLead: 'Want to see the outline before installing? The repository ships two example files:',
       exampleSql: 'SQL example',
       exampleHttp: 'HTTP example',
@@ -385,14 +385,14 @@ export const HOME: Record<Lang, HomeCopy> = {
         '免费开源的 IntelliJ IDEA 插件：把 SQL、HTTP、REST 注释里的 Markdown 标题变成右侧可折叠的注释大纲，点击标题即可跳转，Scratches 里的长脚本同样适用。',
     },
     hero: {
-      badges: ['免费开源', 'MIT 许可证', 'IntelliJ IDEA 2026.2'],
+      badges: ['免费开源', 'MIT 许可证', 'IntelliJ IDEA 2025.1–2026.2'],
       h1: '给 SQL 和 HTTP 文件一份目录',
       lede:
         'Code Comment Navigator 读取你本来就写在注释里的 Markdown 标题——SQL 里的 `-- # 标题`、HTTP 里的 `// # 标题`——在 IntelliJ IDEA 右侧生成可折叠的 Comment Outline，点击标题就跳到对应注释行。项目文件和 Scratches 里越写越长的迭代脚本都适用。',
       ctaMarketplace: '从 JetBrains Marketplace 安装',
       ctaGithub: '在 GitHub 上获取',
       ctaSyntax: '查看标题写法',
-      ctaNote: '版本 1.1.0 · MIT 许可证 · 适配 IntelliJ IDEA 2026.2',
+      ctaNote: '版本 1.2.2 · MIT 许可证 · 适配 IntelliJ IDEA 2025.1–2026.2',
     },
     mock: {
       window: 'Scratches and Consoles',
@@ -528,13 +528,13 @@ export const HOME: Record<Lang, HomeCopy> = {
       marketplaceLive: {
         title: '从 JetBrains Marketplace 安装',
         body:
-          '打开 Marketplace 条目安装到 IntelliJ IDEA 2026.2，或在 Settings → Plugins → Marketplace 里搜索 Code Comment Navigator。',
+          '打开 Marketplace 条目安装到 IntelliJ IDEA 2025.1–2026.2，或在 Settings → Plugins → Marketplace 里搜索 Code Comment Navigator。',
       },
       steps: [
         {
           title: '从源码构建',
           body:
-            '克隆仓库，用 JDK 25 执行 `./gradlew test buildPlugin`。安装包输出在 `build/distributions/comment-navigation-1.1.0.zip`。',
+            '克隆仓库，用 JDK 21 执行 `./gradlew test buildPlugin`。安装包输出在 `build/distributions/comment-navigation-1.2.2.zip`。',
         },
         {
           title: 'Install Plugin from Disk',
@@ -548,7 +548,7 @@ export const HOME: Record<Lang, HomeCopy> = {
         },
       ],
       compat:
-        '本版本的构建与验证范围是 IntelliJ IDEA 2026.2（262.*），更早的 IDE 版本未纳入兼容范围。从源码构建需要 JDK 25。',
+        '兼容 IntelliJ IDEA 2025.1–2026.2（251–262.*），基于 2025.1 SDK 构建并输出 Java 21 字节码。从源码构建需要 JDK 21。',
       examplesLead: '想先看看效果？仓库里带了两个示例文件：',
       exampleSql: 'SQL 示例',
       exampleHttp: 'HTTP 示例',

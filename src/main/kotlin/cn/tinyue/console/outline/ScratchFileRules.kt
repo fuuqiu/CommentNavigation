@@ -23,6 +23,8 @@ internal object ScratchFileRules {
         return name.takeIf { supports(it) }
     }
 
+    fun normalizeRenameName(input: String): String? = normalizeName(input)?.takeIf { supports(it) }
+
     fun initialContent(name: String): String {
         val title = name.substringBeforeLast('.').replace(Regex("[\r\n]"), " ")
         return if (name.endsWith(".sql", ignoreCase = true)) "-- # $title\n\n"

@@ -33,6 +33,7 @@
 点击面板底部独立的 **Scratches** 标题栏，展开 **Scratches 目录树和搜索框**（与面板等宽，不悬浮），上方继续显示当前文件的注释大纲。两个区域独立滚动，可拖动中间分隔线调整高度。目录树直接显示 **Scratches** 内部的目录和文件，不再显示最外层根节点。可浏览其中的 `.http` 和 `.sql` 文件（不区分扩展名大小写，不显示 `.rest` 或其他类型）。支持子目录和同名文件；以 `.` 开头的文件夹（如 `.git`、`.idea`）及其内容会被忽略，也不会出现在搜索结果中。
 
 - 搜索框固定在面板底部。输入文件名片段快速筛选，例如 `shop` 可匹配 `my-shop.sql` 和 `SHOP-api.http`，不区分大小写。
+- Scratches 中右键 SQL / HTTP 文件选择 **重命名**，或选中文件后按 **F2**。输入包含 `.sql` / `.http` 后缀的新文件名，Enter 确认、Esc 取消；同名文件不会被覆盖。重命名后同步更新文件树和当前大纲文件名。
 - 单击文件即可打开；也可在搜索框中用上下键选择、Enter 打开，Esc 关闭。
 - 拖拽文件到目标文件夹即可实际移动文件；拖到列表底部空白处可移回 Scratches 根目录。同名冲突会提示，不覆盖文件。暂不拖动整个文件夹。
 - 选择目录后，点击底部目录标题栏右侧 **＋**，在面板内填写名称：**orders.sql** 创建 SQL 文件，**api.http** 创建 HTTP 文件，**orders** 创建文件夹。选择文件时默认在其所属目录中新建；点击列表空白处取消选择后在 Scratches 根目录新建。其他后缀不接受。
@@ -69,7 +70,9 @@ SELECT 'merchant role';
 SELECT 'page permission';
 ```
 
-支持 `--` 行注释及 `/* ... */` 块注释中的 Markdown 标题。标题必须独占注释行；不提取 SQL 语句行尾注释、字符串或引用标识符中的伪标题。
+支持 `--`、MySQL `#` 行注释及 `/* ... */` 块注释中的 Markdown 标题。标题必须独占注释行；不提取 SQL 语句行尾注释、字符串或引用标识符中的伪标题。
+
+MySQL 方言下，IDE 默认生成的 `# 查询角色权限` 会在没有显式标题时作为普通注释显示。需要层级时，使用 `# # 角色核对`、`# ## 权限明细`：第一个 `#` 是 SQL 注释符，其后的 `#` 才表示标题级别。有显式标题时仍只展示标题，普通说明不进入大纲。
 
 ### HTTP
 
@@ -117,21 +120,27 @@ HTTP 的 `### 请求名称` 固定视为二级节点，因此不要用它表达�
 
 ## 构建与安装
 
-本版本构建及兼容范围为 **IntelliJ IDEA 2026.2（262.*）**，需要 **JDK 25**。解析使用平台 Document API，无需 SQL / HTTP 语言插件依赖。更早的 IDE 版本未纳入本次兼容范围。
+兼容范围为 **IntelliJ IDEA 2025.1–2026.2（251–262.*）**。默认使用 2025.1 SDK 编译，输出 Java 21 字节码；构建工具使用 **JDK 21**，Kotlin API / 语言版本限制为 2.1。解析使用平台 Document API，无需 SQL / HTTP 语言插件依赖。
 
 ```bash
 ./gradlew test buildPlugin
 ```
 
-如果本机已经安装 IDEA 2026.2，可复用其 SDK，避免下载 IDE：
+日常开发可通过 `-PlocalIdePath` 复用本机 SDK；发布前应使用默认 2025.1 基线构建，避免误用新版 API：
 
 ```bash
 IDEA_HOME='/path/to/IntelliJ IDEA.app/Contents'
-JAVA_HOME="$IDEA_HOME/jbr/Contents/Home" \
+JAVA_HOME="/path/to/jdk-21/Contents/Home" \
   ./gradlew test buildPlugin \
   "-PlocalIdePath=$IDEA_HOME"
 ```
 
-安装包位于 `build/distributions/comment-navigation-1.2.1.zip`。在 IDEA 的 **Settings → Plugins → 齿轮菜单 → Install Plugin from Disk…** 中选择 ZIP，并按 IDE 提示完成安装。
+安装包位于 `build/distributions/comment-navigation-1.2.2.zip`。在 IDEA 的 **Settings → Plugins → 齿轮菜单 → Install Plugin from Disk…** 中选择 ZIP，并按 IDE 提示完成安装。
 
 开发时运行 `./gradlew runIde`（可加上述 `-PlocalIdePath` 参数）会使用 Gradle 插件的隔离沙箱，不使用个人 IDEA 配置。
+
+兼容性验证（默认检查构建基线，可附加本机新版 IDE）：
+
+```bash
+./gradlew verifyPlugin "-PverificationIdePath=/path/to/IntelliJ IDEA.app/Contents"
+```

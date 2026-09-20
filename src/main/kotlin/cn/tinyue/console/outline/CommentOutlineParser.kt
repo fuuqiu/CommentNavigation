@@ -93,6 +93,11 @@ class CommentOutlineParser {
                         if (onlyComment) collect(line.substring(index + 2), lineNumber)
                         break
                     }
+                    line[index] == '#' -> {
+                        // MySQL 注释中的引号不参与后续 SQL 的字符串状态。
+                        if (onlyComment) collect(line.substring(index + 1), lineNumber)
+                        break
+                    }
                     line.startsWith("/*", index) -> { blockDepth++; index += 2 }
                     line[index].isWhitespace() -> index++
                     line[index] in "'\"`[" -> {

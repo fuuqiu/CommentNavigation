@@ -38,7 +38,7 @@ export type SectionKey = (typeof SECTIONS)[number];
 
 export const APP = 'Code Comment Navigator';
 export const PLUGIN_ID = 'cn.tinyue.commentnavigation';
-export const VERSION = '1.2.0';
+export const VERSION = '1.2.2';
 export const AUTHOR = 'Fuuqiu';
 /** LICENSE.txt: "Copyright (c) 2024–2026 Fuuqiu (Tinyue)". */
 export const COPYRIGHT_HOLDER = 'Fuuqiu (Tinyue)';
@@ -46,10 +46,10 @@ export const COPYRIGHT_YEARS = '2024–2026';
 export const EMAIL = 'fuuqiu@gmail.com';
 export const LICENSE = 'MIT';
 
-/** Compatibility range from plugin.xml: since-build 262, until-build 262.*. */
-export const IDE = 'IntelliJ IDEA 2026.2';
-export const IDE_BUILD = '262.*';
-export const JDK = 'JDK 25';
+/** 兼容范围与 plugin.xml 保持一致。 */
+export const IDE = 'IntelliJ IDEA 2025.1–2026.2';
+export const IDE_BUILD = '251–262.*';
+export const JDK = 'JDK 21';
 export const BUILD_COMMAND = './gradlew test buildPlugin';
 export const DIST_ZIP = `build/distributions/comment-navigation-${VERSION}.zip`;
 /** plugin.xml keyboard-shortcut, $default keymap: "shift meta F12". */

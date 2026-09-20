@@ -14,8 +14,8 @@ class SqlFileParserImpl : SqlFileParser {
 
         document.text.lineSequence().forEachIndexed { index, line ->
             val trimmed = line.trim()
-            if (!inBlock && trimmed.startsWith("--")) {
-                val content = trimmed.substring(2).trim()
+            if (!inBlock && (trimmed.startsWith("--") || trimmed.startsWith('#'))) {
+                val content = trimmed.substring(if (trimmed.startsWith("--")) 2 else 1).trim()
                 if (content.isNotEmpty()) comments.add(Comment(content, index + 1, CommentType.SQL))
                 return@forEachIndexed
             }
